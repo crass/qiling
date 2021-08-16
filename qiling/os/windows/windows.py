@@ -145,6 +145,14 @@ class QlOsWindows(QlOs):
                     raise QlErrorSyscallNotFound("Windows API implementation not found")
 
 
+    def save(self):
+        return {'heap': self.heap.save()}
+
+
+    def restore(self, saved_state):
+        self.heap.restore(saved_state.get('heap', {}))
+
+
     def post_report(self):
         self.ql.log.debug("Syscalls called:")
         for key, values in self.utils.syscalls.items():
